@@ -8,10 +8,7 @@ const cors = require('cors');
 const { json } = require('express');
 const { appendFile } = require('fs');
 
-const port = 4000;
-
 const api = express()
-const api_pi = express()
 
 const HOST = 'localhost'
 const PORT = 5600;
@@ -40,7 +37,7 @@ var body = [ipAddress1, ipAddress2];
 //GET - Sends Disco Balls IP adress to frontend
 api.get('/getDiscoBalls', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.json(ipAddress1)
+    res.json(body)
 });
 
 var data = {test: "test", test2: "test2"}
