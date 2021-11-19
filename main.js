@@ -33,6 +33,16 @@ api.post('/send_data', (req, res) => {
     res.send(test)
 })
 
+api.post('/send_not_data', (req, res) => {
+    axios.post('http://192.168.43.149:8888/turn_off_led_from_api', {todo: 'buy milk'})
+    res.send(test)
+})
+
+api.get('/test', (req, res) => {
+    var test = req.body 
+    axios.get('http://192.168.43.149:8888/LED_on_off')
+    res.send(test);
+})
 // api.get('/turn_on', (reg, res) => {
 //     led.writeSync(1);
 //     led1.writeSync(1);
