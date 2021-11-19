@@ -4,7 +4,9 @@ const httpStatus = require( 'http-status-codes' );
 const express = require('express');
 const bodyParser = require('body-parser')
 const axios = require('axios');
+const cors = require('cors');
 const { json } = require('express');
+const { appendFile } = require('fs');
 
 const port = 4000;
 
@@ -14,6 +16,7 @@ const api_pi = express()
 const HOST = 'localhost'
 const PORT = 5600;
 
+api.use(cors());
 api.listen(PORT, () => console.log('API running at '+HOST+':'+PORT+'!'));
 
 // create application/json parser
@@ -28,15 +31,16 @@ api.get('/', (req, res) => {
     res.send('Welcome to this API');
 })
 
-var ipAddress1 = "192.168.43.149";
-var ipAddress2 = "192.168.43.146";
+var piPort = "8888";
+var ipAddress1 = {ipAddress: "192.168.43.149", portNr: piPort};
+var ipAddress2 = {ipAddress: "192.168.43.146", portNr: piPort};
 
 var body = [ipAddress1, ipAddress2];
 
 //GET - Sends Disco Balls IP adress to frontend
 api.get('/getDiscoBalls', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(body))
+    res.json(ipAddress1)
 });
 
 var data = {test: "test", test2: "test2"}
@@ -68,5 +72,4 @@ api.put('/putTurnOnDiskoMotor', jsonParser, function (req, res) {
     reqIpAddress = req.body
     console.log(JSON.stringify(reqIpAddress))
     res.send(JSON.stringify(reqIpAddress))
-    
 })
