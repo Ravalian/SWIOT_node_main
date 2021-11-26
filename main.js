@@ -46,7 +46,7 @@ api.put('/turn_On_Off_Motor', jsonParser, (req, res) => {
     var port = req.body.portNr
 
     if(ip != null && port != null){
-        Console.log("ip: " + ip + " //// port: " + port)
+        console.log("ip: " + ip + " //// port: " + port)
         axios.get('http://' + ip + ':' + port + '/Motor_on_off')
         res.status(200).send("Motor started for " + ip)
     }
@@ -61,7 +61,7 @@ api.put('/turn_On_Off_LED', jsonParser, (req, res) => {
     var port = req.body.portNr
 
     if(ip != null && port != null){
-        Console.log("ip: " + ip + " //// port: " + port)
+        console.log("ip: " + ip + " //// port: " + port)
         axios.get('http://' + ip + ':' + port + '/LED_on_off')
         res.status(200).send("LED started for " + ip)
     }
