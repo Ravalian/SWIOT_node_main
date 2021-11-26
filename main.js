@@ -29,17 +29,48 @@ api.get('/', (req, res) => {
 })
 
 var piPort = "8888";
-var ipAddress1 = {ipAddress: "192.168.43.149", portNr: piPort};
-var ipAddress2 = {ipAddress: "192.168.43.146", portNr: piPort};
+var Discoball1 = {ipAddress: "192.168.43.149", portNr: piPort};
+var Discoball2 = {ipAddress: "192.168.43.146", portNr: piPort};
 
-var body = [ipAddress1, ipAddress2];
+var DiscoBalls = [Discoball1, Discoball2];
 
 //GET - Sends Disco Balls IP adress to frontend
 api.get('/getDiscoBalls', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.json(body)
+    res.json(DiscoBalls)
 });
 
+//Motor Controller
+api.put('/turn_On_Off_Motor', jsonParser, (req, res) => {
+    var ip = req.body.ipAddress
+    var port = req.body.portNr
+
+    if(ip != null && port != null){
+        Console.log("ip: " + ip + " //// port: " + port)
+        axios.get('http://' + ip + ':' + port + '/Motor_on_off')
+        res.status(200).send("Motor started for " + ip)
+    }
+    else {
+        res.status(404).send("ip does not exist");;
+    }
+});
+
+//LED controller
+api.put('/turn_On_Off_LED', jsonParser, (req, res) => {
+    var ip = req.body.ipAddress
+    var port = req.body.portNr
+
+    if(ip != null && port != null){
+        Console.log("ip: " + ip + " //// port: " + port)
+        axios.get('http://' + ip + ':' + port + '/LED_on_off')
+        res.status(200).send("LED started for " + ip)
+    }
+    else {
+        res.status(400).send("ip does not exist");
+    }
+});
+
+//All below is for testing purposes
 var data = {test: "test", test2: "test2"}
 var test = JSON.stringify(data)
 
