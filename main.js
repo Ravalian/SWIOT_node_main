@@ -28,9 +28,8 @@ api.get('/', (req, res) => {
     res.send('Welcome to this API');
 })
 
-var piPort = "8888";
-var Discoball1 = {ipAddress: "192.168.43.149", portNr: piPort};
-var Discoball2 = {ipAddress: "192.168.43.146", portNr: piPort};
+var Discoball1 = {ipAddress: "192.168.43.149", portNr: "8888"};
+var Discoball2 = {ipAddress: "192.168.43.196", portNr: "8889"};
 
 var DiscoBalls = [Discoball1, Discoball2];
 
@@ -45,13 +44,16 @@ api.put('/turn_On_Off_Motor', jsonParser, (req, res) => {
     var ip = req.body.ipAddress
     var port = req.body.portNr
 
-    if(ip != null && port != null){
+    if(ip == Discoball1 || Discoball2 && port != null){
         console.log("ip: " + ip + " //// port: " + port)
         axios.get('http://' + ip + ':' + port + '/Motor_on_off')
         res.status(200).send("Motor started for " + ip)
     }
-    else {
+    else if (ip != Discoball1 || Discoball2){
         res.status(404).send("ip does not exist");;
+    }
+    else{
+        res.status(400);
     }
 });
 
@@ -60,13 +62,16 @@ api.put('/turn_On_Off_LED', jsonParser, (req, res) => {
     var ip = req.body.ipAddress
     var port = req.body.portNr
 
-    if(ip != null && port != null){
+    if(ip == Discoball1 || Discoball2 && port != null){
         console.log("ip: " + ip + " //// port: " + port)
         axios.get('http://' + ip + ':' + port + '/LED_on_off')
         res.status(200).send("LED started for " + ip)
     }
-    else {
+    else if (ip != Discoball1 || Discoball2) {
         res.status(400).send("ip does not exist");
+    }
+    else{
+        res.status(400);
     }
 });
 
