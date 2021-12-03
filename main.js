@@ -1,12 +1,8 @@
 'use strict';
-//const http = require( 'http' );
-//const httpStatus = require( 'http-status-codes' );
 const express = require('express');
 const bodyParser = require('body-parser')
 const axios = require('axios');
 const cors = require('cors');
-//const { json } = require('express');
-//const { appendFile } = require('fs');
 
 const api = express()
 
@@ -81,7 +77,7 @@ api.put('/Turn_On_Off_Temp_Sensor', jsonParser, (req, res) => {
     if(ip == Discoball1 || Discoball2 && port != null){
         console.log("ip: " + ip + " //// port: " + port)
         axios.get('http://' + ip + ':' + port + '/temp_sensor_on_off')
-        res.status(200).send("LED started for " + ip)
+        res.status(200).send("Temp Sensor controller started for " + ip)
     }
     else if (ip != Discoball1 || Discoball2) {
         res.status(400).send("ip does not exist");
@@ -90,35 +86,3 @@ api.put('/Turn_On_Off_Temp_Sensor', jsonParser, (req, res) => {
         res.status(400);
     }
 })
-
-// //All below is for testing purposes
-// var data = {test: "test", test2: "test2"}
-// var test = JSON.stringify(data)
-
-// //Test method
-// api.post('/send_data', (req, res) => {
-//     axios.post('http://192.168.43.149:8888/turn_on_led_from_api', {todo: 'buy milk'})
-//     res.send(test)
-// })
-
-// //Test method
-// api.post('/send_not_data', (req, res) => {
-//     axios.post('http://192.168.43.149:8888/turn_off_led_from_api', {todo: 'buy milk'})
-//     res.send(test)
-// })
-
-// //GET - Test if LEDS can be turn on with GET
-// api.get('/test', (req, res) => {
-//     var test = req.body 
-//     axios.get('http://192.168.43.149:8888/LED_on_off')
-//     res.send(test);
-// })
-
-// //Put - Turn on Motor from frontend
-// var reqIpAddress;
-// api.put('/putTurnOnDiskoMotor', jsonParser, function (req, res) {
-
-//     reqIpAddress = req.body
-//     console.log(JSON.stringify(reqIpAddress))
-//     res.send(JSON.stringify(reqIpAddress))
-// })
